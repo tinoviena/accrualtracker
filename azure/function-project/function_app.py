@@ -6,6 +6,7 @@ import logging
 import json
 import hashlib
 import os
+from datetime import datetime
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 
@@ -38,7 +39,8 @@ def mk_acc_http_trigger(req: func.HttpRequest) -> func.HttpResponse:
                 if (not isValid(my_entity)):
                     #return BuggerOffResponse
                     continue
-                my_entity["PartitionKey"] = "Accruals"
+
+                my_entity["PartitionKey"] = getYearAndMonth()
                 my_entity["RowKey"] = sha1_hash(my_entity)
                 logging.info(req_body)
                 try:
@@ -60,6 +62,10 @@ def mk_acc_http_trigger(req: func.HttpRequest) -> func.HttpResponse:
             json.dumps(response),
             status_code=200
     )
+
+def getYearAndMonth():
+    now = datetime.now()
+    return now.strftime("%Y%m")
 
 @app.route(route="mk_acc_http_trigger_read")
 def mk_acc_http_trigger_read(req: func.HttpRequest) -> func.HttpResponse:
@@ -83,14 +89,15 @@ def mk_acc_http_trigger_read(req: func.HttpRequest) -> func.HttpResponse:
                 #table_client = table_service_client.get_table_client(table_name="Accruals")
                 try:
                     parameters = {
+                        "pk": getYearAndMonth(),
                         "account": acc,
                     }
-                    query_filter = "account eq @account"
+                    query_filter = "PartitionKey eq @pk and account eq @account"
                     records = table_client.query_entities(query_filter, parameters=parameters)
-                    total = 0
-                    total = sum(d['amountEuro'] for d in records) 
+                    total = 0.0
+                    total = sum(d['amountEuro'] for d in records)
 
-                    logging.info(f"SUCCESS - {records}")
+                    logging.info(f"SUCCESS - {total}")
                     response["total"] = total
                     response["message"] = "we are happy"
                 except Exception as e:
