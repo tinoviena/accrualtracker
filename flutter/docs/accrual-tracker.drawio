@@ -1,0 +1,34 @@
+<mxfile host="Electron" modified="2024-01-21T08:18:29.908Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.21 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="IvREhIwn_52VZepQAq47" version="22.1.21" type="device">
+  <diagram name="UI" id="EdsOvtV-2qjY3-Kkl_eG">
+    <mxGraphModel dx="2533" dy="843" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="rBNq9jveojPEdbhcX2rX-1" value="" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=#ffffff;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.smartphone;" vertex="1" parent="1">
+          <mxGeometry x="-610" y="150" width="408" height="690" as="geometry" />
+        </mxCell>
+        <mxCell id="rBNq9jveojPEdbhcX2rX-2" value="" style="shape=mxgraph.mockup.containers.marginRect;rectMarginTop=10;strokeColor=#666666;strokeWidth=1;dashed=0;rounded=1;arcSize=5;recursiveResize=0;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-610" y="240" width="400" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="rBNq9jveojPEdbhcX2rX-3" value="New Accrual" style="shape=rect;strokeColor=none;fillColor=#008cff;strokeWidth=1;dashed=0;rounded=1;arcSize=20;fontColor=#ffffff;fontSize=17;spacing=2;spacingTop=-2;align=left;autosize=1;spacingLeft=4;resizeWidth=0;resizeHeight=0;perimeter=none;html=1;whiteSpace=wrap;" vertex="1" parent="rBNq9jveojPEdbhcX2rX-2">
+          <mxGeometry x="5" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rBNq9jveojPEdbhcX2rX-4" value="Default text" style="strokeWidth=1;html=1;shadow=0;dashed=0;shape=mxgraph.ios.iTextInput;strokeColor=#444444;buttonText=;fontSize=8;whiteSpace=wrap;align=left;" vertex="1" parent="rBNq9jveojPEdbhcX2rX-2">
+          <mxGeometry x="4" y="42.5" width="96" height="17.5" as="geometry" />
+        </mxCell>
+        <mxCell id="rBNq9jveojPEdbhcX2rX-8" value="Default text" style="strokeWidth=1;html=1;shadow=0;dashed=0;shape=mxgraph.ios.iTextInput;strokeColor=#444444;buttonText=;fontSize=8;whiteSpace=wrap;align=left;" vertex="1" parent="rBNq9jveojPEdbhcX2rX-2">
+          <mxGeometry x="110" y="42.5" width="96" height="17.5" as="geometry" />
+        </mxCell>
+        <mxCell id="rBNq9jveojPEdbhcX2rX-9" value="Default text" style="strokeWidth=1;html=1;shadow=0;dashed=0;shape=mxgraph.ios.iTextInput;strokeColor=#444444;buttonText=;fontSize=8;whiteSpace=wrap;align=left;" vertex="1" parent="rBNq9jveojPEdbhcX2rX-2">
+          <mxGeometry x="210" y="42.5" width="96" height="17.5" as="geometry" />
+        </mxCell>
+        <mxCell id="rBNq9jveojPEdbhcX2rX-10" value="Submit" style="rounded=1;fillColor=#0057D8;align=center;strokeColor=none;html=1;whiteSpace=wrap;fontColor=#ffffff;fontSize=12;sketch=0;" vertex="1" parent="rBNq9jveojPEdbhcX2rX-2">
+          <mxGeometry x="315" y="34.75" width="80" height="33" as="geometry" />
+        </mxCell>
+        <mxCell id="rBNq9jveojPEdbhcX2rX-11" value="" style="html=1;shadow=0;dashed=0;shape=mxgraph.atlassian.close;fillColor=#BA3200;strokeColor=none;html=1;sketch=0;" vertex="1" parent="rBNq9jveojPEdbhcX2rX-2">
+          <mxGeometry x="290" y="43.75" width="14" height="14" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
