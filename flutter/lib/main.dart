@@ -48,7 +48,7 @@ class DataProvider {
     payload["secret"] = secret;
     payload["records"] = [];
     payload["records"].add(jsonData);
-    print("BEHOLD THIS: ${json.encode(payload)}");
+    print("Post data: ${json.encode(payload)}");
     final http.Response response = await http.post(
       Uri.parse(apiUrl),
       headers: <String, String>{
@@ -61,6 +61,30 @@ class DataProvider {
     }
     final Map<String, dynamic> responseBody = json.decode(response.body);
     return responseBody.toString();
+  }
+
+  Future<double> getTotal(String account) async {
+    var payload = <String, dynamic>{
+      "secret": secret,
+      "account": account,
+    };
+
+    final http.Response response = await http.post(
+      Uri.parse("${apiUrl}_read"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: json.encode(payload),
+    );
+    if (response.statusCode != 200) {
+      throw Exception('Failed to post data: ${response.statusCode}');
+    }
+    final Map<String, dynamic> responseBody = json.decode(response.body);
+    var total = 0.0;
+    if (responseBody.containsKey("total")) {
+      total = responseBody['total'];
+    }
+    return total;
   }
 }
 
@@ -119,6 +143,8 @@ enum AccountTypes {
 class _MyHomePageState extends State<MyHomePage> {
   final String _message = "n/a";
   final int _counter = 0;
+  String _recordId = "";
+  Map<String, double> _totals = {};
 
   DateTime _selectedDate = DateTime.now();
   String _description = "";
@@ -135,7 +161,15 @@ class _MyHomePageState extends State<MyHomePage> {
     final DataProvider dataProvider =
         DataProvider('http://localhost:7071/api/mk_acc_http_trigger');
     var response = await dataProvider.postData(jsonData);
-    print(response);
+    _recordId = response.toString();
+
+    var total = await dataProvider.getTotal(ar.account);
+
+    setState(() {
+      _recordId = response.toString();
+      _totals[ar.account] = total.toDouble();
+    });
+    print("recordId is now $_recordId, totals is now $_totals");
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -246,6 +280,31 @@ class _MyHomePageState extends State<MyHomePage> {
                       }).toList(),
                     ),
                   ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 4.0, horizontal: 8.0),
+                    child: Text(_recordId),
+                  ),
+                  Container(
+                    color: Colors.blueGrey,
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 4.0, horizontal: 8.0),
+                    child: Table(
+                      border: TableBorder.all(),
+                      children: _totals.entries.map((entry) {
+                        return TableRow(
+                          children: [
+                            Text(entry.key,
+                                style:
+                                    Theme.of(context).textTheme.displaySmall),
+                            Text(entry.value.toString(),
+                                style:
+                                    Theme.of(context).textTheme.displaySmall),
+                          ],
+                        );
+                      }).toList(),
+                    ),
+                  )
                 ],
               ),
             ),

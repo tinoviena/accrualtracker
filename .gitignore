@@ -10,6 +10,11 @@
 .svn/
 migrate_working_dir/
 
+# Azure
+__queuestorage__
+__blobstorage__
+__azurite*
+
 # IntelliJ related
 *.iml
 *.ipr
