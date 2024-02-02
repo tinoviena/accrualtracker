@@ -1,8 +1,11 @@
+import 'package:accrualtracker/file_data_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-void main() {
+import 'package:accrualtracker/domain_model.dart';
+import 'package:accrualtracker/http_data_provider.dart';
+import 'package:accrualtracker/data_provider.dart';
+
+void main() async {
   runApp(const MyApp());
 }
 
@@ -32,134 +35,27 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class DataProvider {
-  final String apiUrl;
-  final String secret = "c0fa0758-b954-11ee-9a88-3baa8ec87383";
-  DataProvider(this.apiUrl);
-
-  Future<String> getData() async {
-    final response = await http.get(Uri.parse(apiUrl));
-    final Map<String, dynamic> responseBody = json.decode(response.body);
-    return responseBody['origin'];
-  }
-
-  Future<String> postData(Map<String, dynamic> jsonData) async {
-    var payload = <String, dynamic>{};
-    payload["secret"] = secret;
-    payload["records"] = [];
-    payload["records"].add(jsonData);
-    print("Post data: ${json.encode(payload)}");
-    final http.Response response = await http.post(
-      Uri.parse(apiUrl),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: json.encode(payload),
-    );
-    if (response.statusCode != 200) {
-      throw Exception('Failed to post data: ${response.statusCode}');
-    }
-    final Map<String, dynamic> responseBody = json.decode(response.body);
-    return responseBody.toString();
-  }
-
-  Future<double> getTotal(String account) async {
-    var payload = <String, dynamic>{
-      "secret": secret,
-      "account": account,
-    };
-
-    final http.Response response = await http.post(
-      Uri.parse("${apiUrl}_read"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: json.encode(payload),
-    );
-    if (response.statusCode != 200) {
-      throw Exception('Failed to post data: ${response.statusCode}');
-    }
-    final Map<String, dynamic> responseBody = json.decode(response.body);
-    var total = 0.0;
-    if (responseBody.containsKey("total")) {
-      total = responseBody['total'];
-    }
-    return total;
-  }
-}
-
-class AccrualRecord {
-  DateTime day;
-  String description;
-  double amountEuro;
-  String account;
-
-  AccrualRecord({
-    required this.day,
-    required this.description,
-    required this.amountEuro,
-    required this.account,
-  });
-
-  @override
-  String toString() {
-    return 'day: $day, description: $description, amount: $amountEuro, account: $account';
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'day': day.toIso8601String(),
-      'description': description,
-      'amountEuro': amountEuro,
-      'account': account,
-    };
-  }
-
-  factory AccrualRecord.fromJson(Map<String, dynamic> json) {
-    return AccrualRecord(
-      day: DateTime.parse(json['day']),
-      description: json['description'],
-      amountEuro: json['amountEuros'],
-      account: json['account'],
-    );
-  }
-}
-
-enum AccountTypes {
-  ansparen,
-  sabadell,
-  heizen,
-  lucy,
-  taschengeld,
-  cut,
-  essen,
-  strom,
-  miete,
-  telekom,
-  sonstiges,
-  orf
-}
-
 class _MyHomePageState extends State<MyHomePage> {
-  final String _message = "n/a";
-  final int _counter = 0;
   String _recordId = "";
-  Map<String, double> _totals = {};
+  final Map<String, double> _totals = {};
 
   DateTime _selectedDate = DateTime.now();
   String _description = "";
   double _amount = 0.0;
   String _selectedAccount = AccountTypes.essen.name;
+  int _id = 0;
 
   Future<void> _createAccrualRecord() async {
     AccrualRecord ar = AccrualRecord(
+        id: _id,
         day: _selectedDate,
         description: _description,
         amountEuro: _amount,
         account: _selectedAccount);
     var jsonData = ar.toJson();
-    final DataProvider dataProvider =
-        DataProvider('http://localhost:7071/api/mk_acc_http_trigger');
+    DataProvider dataProvider = FileDataProvider();
+    // HttpDataProvider();
+
     var response = await dataProvider.postData(jsonData);
     _recordId = response.toString();
 

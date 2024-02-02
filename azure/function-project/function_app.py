@@ -9,6 +9,10 @@ import os
 from datetime import datetime
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
+table_ep = "https://ml015707162299.table.core.windows.net"
+#table_ep = "http://127.0.0.1:10002/devstoreaccount1" 
+credential = AzureNamedKeyCredential(os.environ["AZ_TABLE_ACCOUNT_NAME"], os.environ["AZURE_TABLE_ACCOUNT_KEY"])
+#credential = AzureNamedKeyCredential("devstoreaccount1", "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==")
 
 BuggerOffResponse = func.HttpResponse(
                     "Awesome!",
@@ -17,8 +21,7 @@ BuggerOffResponse = func.HttpResponse(
 
 @app.route(route="mk_acc_http_trigger")
 def mk_acc_http_trigger(req: func.HttpRequest) -> func.HttpResponse:
-    credential = AzureNamedKeyCredential(os.environ["AZ_TABLE_ACCOUNT_NAME"], os.environ["AZURE_TABLE_ACCOUNT_KEY"])
-
+    # credential = AzureNamedKeyCredential(os.environ["AZ_TABLE_ACCOUNT_NAME"], os.environ["AZURE_TABLE_ACCOUNT_KEY"])
     logging.info('Python HTTP trigger function processed a request.')
 
     response = {}
@@ -28,7 +31,7 @@ def mk_acc_http_trigger(req: func.HttpRequest) -> func.HttpResponse:
         if (sec == None or sec == '' or sec != "c0fa0758-b954-11ee-9a88-3baa8ec87383"):
             return BuggerOffResponse
         
-        with TableServiceClient(endpoint="https://ml015707162299.table.core.windows.net", credential=credential) as table_service_client:
+        with TableServiceClient(endpoint=table_ep, credential=credential) as table_service_client:
             properties = table_service_client.get_service_properties()
             table_client = table_service_client.get_table_client(table_name="Accruals")
             recs = req_body.get("records")
@@ -69,7 +72,6 @@ def getYearAndMonth():
 
 @app.route(route="mk_acc_http_trigger_read")
 def mk_acc_http_trigger_read(req: func.HttpRequest) -> func.HttpResponse:
-    credential = AzureNamedKeyCredential(os.environ["AZ_TABLE_ACCOUNT_NAME"], os.environ["AZURE_TABLE_ACCOUNT_KEY"])
 
     logging.info('Python HTTP trigger read function processed a request.')
 
@@ -84,8 +86,7 @@ def mk_acc_http_trigger_read(req: func.HttpRequest) -> func.HttpResponse:
             if (acc == None):
                 logging.error("FAIL - there is no 'records' element on root level")
                 return BuggerOffResponse
-
-            with TableClient(table_name="Accruals", endpoint="https://ml015707162299.table.core.windows.net", credential=credential) as table_client:
+            with TableClient(table_name="Accruals", endpoint=table_ep, credential=credential) as table_client:
                 #table_client = table_service_client.get_table_client(table_name="Accruals")
                 try:
                     parameters = {

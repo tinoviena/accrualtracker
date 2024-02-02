@@ -35,7 +35,7 @@ __azurite*
 .packages
 .pub-cache/
 .pub/
-/build/
+flutter/build/
 build/
 ./build/
 build/linux
