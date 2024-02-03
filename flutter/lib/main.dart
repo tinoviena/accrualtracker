@@ -40,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final Map<String, double> _totals = {};
 
   DateTime _selectedDate = DateTime.now();
+
   String _description = "";
   double _amount = 0.0;
   String _selectedAccount = AccountTypes.essen.name;

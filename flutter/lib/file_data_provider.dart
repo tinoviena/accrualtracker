@@ -44,18 +44,28 @@ class FileDataProvider implements DataProvider {
     final lines = csv.split('\n').where((line) => line.isNotEmpty);
     final records = lines.map((line) {
       final parts = line.split(',');
-      return Map.fromIterables(['key', 'value'], parts);
+      return Map.fromIterables(
+          ['id', 'day', 'description', 'amountEuro', 'account'], parts);
     });
     return records.toList();
   }
 
   @override
-  // TODO: implement apiUrl
   String get apiUrl => throw UnimplementedError();
 
   @override
-  Future<double> getTotal(String account) {
-    return Future.value(100.2);
+  Future<double> getTotal(String account) async {
+    var recs = await readAllRecords();
+
+    print("§recs: ${recs.length}");
+    var total = recs
+        .where(
+            (recs) => DateTime.parse(recs["day"]).month == DateTime.now().month)
+        .where((recs) => recs["account"] == account)
+        .map((rec) => double.parse(rec["amountEuro"]))
+        .reduce((a, b) => a + b);
+
+    return total;
   }
 
   @override
