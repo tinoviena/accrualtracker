@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:share/share.dart';
 import 'package:crypto/crypto.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:accrualtracker/data_provider.dart';
@@ -8,7 +9,7 @@ class FileDataProvider implements DataProvider {
   static Future<File> _getFile() async {
     final directory = await getApplicationDocumentsDirectory();
     final path = directory.path;
-    return File('$path/records.csv');
+    return File('$path/accruals.csv');
   }
 
   @override

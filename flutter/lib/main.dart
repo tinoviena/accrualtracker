@@ -1,6 +1,8 @@
 import 'package:accrualtracker/file_data_provider.dart';
 import 'package:flutter/material.dart';
-
+import 'dart:io';
+import 'package:share_plus/share_plus.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:accrualtracker/domain_model.dart';
 import 'package:accrualtracker/http_data_provider.dart';
 import 'package:accrualtracker/data_provider.dart';
@@ -107,6 +109,29 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share), // Add your button icon here
+            onPressed: () async {
+              // Add your button onPressed callback here
+              print('Share button pressed');
+              // Get the application documents directory
+              Directory appDocDir = await getApplicationDocumentsDirectory();
+              String appDocPath = appDocDir.path;
+
+              // Construct the file path
+              String filePath = '$appDocPath/accruals.csv';
+
+              // Check if the file exists
+              if (File(filePath).existsSync()) {
+                // Share the file
+                Share.shareFiles([filePath]);
+              } else {
+                print('File not found');
+              }
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Row(
