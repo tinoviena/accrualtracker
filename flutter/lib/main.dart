@@ -1,4 +1,5 @@
 import 'package:accrualtracker/file_data_provider.dart';
+import 'package:accrualtracker/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:share_plus/share_plus.dart';
@@ -6,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:accrualtracker/domain_model.dart';
 import 'package:accrualtracker/http_data_provider.dart';
 import 'package:accrualtracker/data_provider.dart';
+import 'package:accrualtracker/settings_screen.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -40,6 +42,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
+  double _totalBudget = 0.0;
 
   String _recordId = "";
   final Map<String, double> _totals = {};
@@ -49,6 +52,8 @@ class _MyHomePageState extends State<MyHomePage> {
   String _description = "";
   double _amount = 0.0;
   String _selectedAccount = AccountTypes.essen.name;
+
+  String _message = "";
 
   Future<AccrualResponse> _createAccrualRecord() async {
     AccrualRecord ar = AccrualRecord(
@@ -146,6 +151,8 @@ class _MyHomePageState extends State<MyHomePage> {
               }
             },
           ),
+          IconButton(
+              onPressed: _showSettings, icon: const Icon(Icons.settings)),
         ],
       ),
       body: Center(
@@ -194,9 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         labelText: "Amount",
                         border: OutlineInputBorder(),
                       ),
-                      onChanged: (value) {
-                        _amount = double.parse(value);
-                      },
+                      onChanged: _saveAmount,
                     ),
                   ),
                   Container(
@@ -222,7 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         vertical: 4.0, horizontal: 8.0),
-                    child: Text("Created Record $_recordId"),
+                    child: Text(_message),
                   ),
                   Container(
                     color: Colors.blueGrey,
@@ -256,5 +261,26 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.save),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  void _saveAmount(value) {
+    _amount = double.parse(value);
+  }
+
+  void _showSettings() async {
+    SettingsScreen ss = SettingsScreen();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ss,
+        )).then((context) {
+      print("popped! $context ");
+      SettingsProvider.load().then((value) => setState(() {
+            _totalBudget = value["totalBudget"];
+            print(_totalBudget);
+            _message = "read setting _totalBudget=$_totalBudget";
+            print("all state is good state");
+          }));
+    });
   }
 }
