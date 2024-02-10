@@ -8,4 +8,5 @@ abstract class DataProvider {
 
   Future<String> postData(Map<String, dynamic> jsonData);
   Future<double> getTotal(String account);
+  Future<Map<String, double>> getAllTotals();
 }

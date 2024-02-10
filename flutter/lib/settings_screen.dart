@@ -32,7 +32,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           _amountController.text = _totalBudget.toString();
         });
       });
-      print('Initialized once!');
     }
   }
 

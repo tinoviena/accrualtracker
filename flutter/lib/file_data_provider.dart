@@ -71,18 +71,39 @@ class FileDataProvider implements DataProvider {
   Future<double> getTotal(String account) async {
     var recs = await readAllRecords();
 
-    print("§recs: ${recs.length}");
+    double total = _calulateTotalForAccount(recs, account);
+
+    return total;
+  }
+
+  double _calulateTotalForAccount(
+      List<Map<String, dynamic>> recs, String account) {
     var total = recs
         .where(
             (recs) => DateTime.parse(recs["day"]).month == DateTime.now().month)
         .where((recs) => recs["account"] == account)
         .map((rec) => double.parse(rec["amountEuro"]))
         .reduce((a, b) => a + b);
-
     return total;
   }
 
   @override
   // TODO: implement secret
   String get secret => throw UnimplementedError();
+
+  @override
+  Future<Map<String, double>> getAllTotals() async {
+    var recs = await readAllRecords();
+    var accounts = recs.map((rec) => rec["account"]).toSet().toList();
+    var totals = <String, double>{};
+
+    var grandTotal = 0.0;
+    for (var acc in accounts) {
+      var accountTotal = _calulateTotalForAccount(recs, acc);
+      grandTotal += accountTotal;
+      totals[acc] = accountTotal;
+    }
+    totals["TOTAL"] = grandTotal;
+    return totals;
+  }
 }

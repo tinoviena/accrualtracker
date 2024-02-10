@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   double _totalBudget = 0.0;
 
   String _recordId = "";
-  final Map<String, double> _totals = {};
+  Map<String, double> _totals = {};
 
   DateTime _selectedDate = DateTime.now();
 
@@ -55,6 +55,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String _message = "";
 
+  DataProvider _dataProvider = FileDataProvider();
+
+  Map<String, double> _budgets = {};
+  bool didInitialize = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (!didInitialize) {
+      didInitialize = true;
+      // Your one-time initialization code here
+      SettingsProvider.load().then((settings) async {
+        var budgets =
+            Map.castFrom<String, dynamic, String, double>(settings["budgets"]);
+        setState(() {
+          _budgets = budgets;
+        });
+      });
+    }
+  }
+
   Future<AccrualResponse> _createAccrualRecord() async {
     AccrualRecord ar = AccrualRecord(
         id: "",
@@ -63,26 +84,22 @@ class _MyHomePageState extends State<MyHomePage> {
         amountEuro: _amount,
         account: _selectedAccount);
     var jsonData = ar.toJson();
-    DataProvider dataProvider = FileDataProvider();
-    // HttpDataProvider();
 
-    var response = await dataProvider.postData(jsonData);
+    var response = await _dataProvider.postData(jsonData);
     _recordId = response.toString();
 
-    var total = await dataProvider.getTotal(ar.account);
-
-    print("recordId is now $_recordId");
     return AccrualResponse(
-        id: _recordId, totalAmountEuro: total.toDouble(), account: ar.account);
+        id: _recordId, totalAmountEuro: 0.0, account: ar.account);
   }
 
   Future<void> _onSubmitButtonPressed() async {
     if (_amount == 0.0) {}
     AccrualResponse ar = await _createAccrualRecord();
+    var totals = await _dataProvider.getAllTotals();
 
     setState(() {
+      _totals = totals;
       _recordId = ar.id.toString();
-      _totals[ar.account] = ar.totalAmountEuro;
       _descriptionController.clear();
       _description = "";
       _amountController.clear();
@@ -120,21 +137,24 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+    _dataProvider.getAllTotals().then((value) {
+      setState(() {
+        _totals = value;
+      });
+    });
+
     return Scaffold(
       appBar: AppBar(
         // TRY THIS: Try changing the color here to a specific color (to
         // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
         // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
         actions: [
           IconButton(
             icon: const Icon(Icons.share), // Add your button icon here
             onPressed: () async {
               // Add your button onPressed callback here
-              print('Share button pressed');
               // Get the application documents directory
               Directory appDocDir = await getApplicationDocumentsDirectory();
               String appDocPath = appDocDir.path;
@@ -230,7 +250,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Text(_message),
                   ),
                   Container(
-                    color: Colors.blueGrey,
+                    color: const Color.fromARGB(255, 167, 214, 237),
                     margin: const EdgeInsets.symmetric(
                         vertical: 4.0, horizontal: 8.0),
                     child: Table(
@@ -242,6 +262,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                 style:
                                     Theme.of(context).textTheme.displaySmall),
                             Text(entry.value.toString(),
+                                style:
+                                    Theme.of(context).textTheme.displaySmall),
+                            Text(_budgets[entry.key].toString(),
                                 style:
                                     Theme.of(context).textTheme.displaySmall),
                           ],
@@ -274,12 +297,9 @@ class _MyHomePageState extends State<MyHomePage> {
         MaterialPageRoute(
           builder: (context) => ss,
         )).then((context) {
-      print("popped! $context ");
       SettingsProvider.load().then((value) => setState(() {
             _totalBudget = value["totalBudget"];
-            print(_totalBudget);
             _message = "read setting _totalBudget=$_totalBudget";
-            print("all state is good state");
           }));
     });
   }

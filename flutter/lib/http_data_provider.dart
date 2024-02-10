@@ -66,4 +66,9 @@ class HttpDataProvider implements DataProvider {
     }
     return total;
   }
+
+  @override
+  Future<Map<String, double>> getAllTotals() {
+    throw UnimplementedError();
+  }
 }
