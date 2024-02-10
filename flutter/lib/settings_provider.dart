@@ -22,9 +22,11 @@ class SettingsProvider {
 
   static Future<bool> save(Map<String, dynamic> jsonData) async {
     // Convert the JSON object to a string
+    var current = await load();
+    current["totalBudget"] = jsonData["totalBudget"];
 
     // Convert the sorted JSON object to a string
-    String jsonString = jsonEncode(jsonData);
+    String jsonString = jsonEncode(current);
 
     // Generate the SHA-1 hash of the string
     final file = await _getFile();
