@@ -30,6 +30,8 @@ environment:
 dependencies:
   http: ^0.13.4
   crypto: ^3.0.1
+  share: ^2.0.4
+  share_plus: ^6.3.2
   flutter:
     sdk: flutter
 

@@ -22,12 +22,25 @@ class FileDataProvider implements DataProvider {
     // Generate the SHA-1 hash of the string
     String sha1Hash = sha1.convert(utf8.encode(jsonString)).toString();
     final file = await _getFile();
-    final exists = await file.exists();
+    final fileExists = await file.exists();
+
     final csv =
         "$sha1Hash,${jsonData["day"]},${jsonData["description"]},${jsonData["amountEuro"]},${jsonData["account"]}";
     await file.writeAsString('$csv\n',
-        mode: exists ? FileMode.append : FileMode.write);
-    return Future.value("Hello");
+        mode: fileExists ? FileMode.append : FileMode.write);
+    return sha1Hash;
+  }
+
+  Future<int> countNomberOfLines(File file) async {
+    int lineCount = 0;
+    final fileExists = await file.exists();
+    if (fileExists) {
+      final content = await file.readAsString();
+      lineCount = content.split('\n').length;
+    } else {
+      print('File does not exist');
+    }
+    return lineCount;
   }
 
   @override

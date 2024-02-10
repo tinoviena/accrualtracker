@@ -38,6 +38,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
+
   String _recordId = "";
   final Map<String, double> _totals = {};
 
@@ -46,11 +49,10 @@ class _MyHomePageState extends State<MyHomePage> {
   String _description = "";
   double _amount = 0.0;
   String _selectedAccount = AccountTypes.essen.name;
-  int _id = 0;
 
-  Future<void> _createAccrualRecord() async {
+  Future<AccrualResponse> _createAccrualRecord() async {
     AccrualRecord ar = AccrualRecord(
-        id: _id,
+        id: "",
         day: _selectedDate,
         description: _description,
         amountEuro: _amount,
@@ -64,11 +66,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
     var total = await dataProvider.getTotal(ar.account);
 
+    print("recordId is now $_recordId");
+    return AccrualResponse(
+        id: _recordId, totalAmountEuro: total.toDouble(), account: ar.account);
+  }
+
+  Future<void> _onSubmitButtonPressed() async {
+    if (_amount == 0.0) {}
+    AccrualResponse ar = await _createAccrualRecord();
+
     setState(() {
-      _recordId = response.toString();
-      _totals[ar.account] = total.toDouble();
+      _recordId = ar.id.toString();
+      _totals[ar.account] = ar.totalAmountEuro;
+      _descriptionController.clear();
+      _description = "";
+      _amountController.clear();
+      _amount = 0.0;
+      _selectedAccount = AccountTypes.essen.name;
     });
-    print("recordId is now $_recordId, totals is now $_totals");
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -125,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
               // Check if the file exists
               if (File(filePath).existsSync()) {
                 // Share the file
-                Share.shareFiles([filePath]);
+                Share.shareXFiles([XFile(filePath)]);
               } else {
                 print('File not found');
               }
@@ -159,6 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 4.0),
                     child: TextField(
+                      controller: _descriptionController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Description',
@@ -171,6 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 4.0),
                     child: TextFormField(
+                      controller: _amountController,
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
                       decoration: const InputDecoration(
@@ -205,7 +222,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         vertical: 4.0, horizontal: 8.0),
-                    child: Text(_recordId),
+                    child: Text("Created Record $_recordId"),
                   ),
                   Container(
                     color: Colors.blueGrey,
@@ -234,7 +251,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _createAccrualRecord,
+        onPressed: _onSubmitButtonPressed,
         tooltip: 'Create',
         child: const Icon(Icons.save),
       ), // This trailing comma makes auto-formatting nicer for build methods.

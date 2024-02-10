@@ -1,5 +1,17 @@
+class AccrualResponse {
+  String id;
+  double totalAmountEuro;
+  String account;
+
+  AccrualResponse({
+    required this.id,
+    required this.totalAmountEuro,
+    required this.account,
+  });
+}
+
 class AccrualRecord {
-  int id;
+  String id;
   DateTime day;
   String description;
   double amountEuro;
