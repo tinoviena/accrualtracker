@@ -1,8 +1,8 @@
-# Install script for directory: /home/martin/Documents/dev/github/accrualtracker/linux
+# Install script for directory: /home/martin/Documents/dev/github/accrualtracker/flutter/linux
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle")
+  set(CMAKE_INSTALL_PREFIX "/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -39,83 +39,96 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMPONENT)
   
-  file(REMOVE_RECURSE "/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle/")
+  file(REMOVE_RECURSE "/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/")
   
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMPONENT)
-  if(EXISTS "$ENV{DESTDIR}/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle/accrualtracker" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle/accrualtracker")
+  if(EXISTS "$ENV{DESTDIR}/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/accrualtracker" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/accrualtracker")
     file(RPATH_CHECK
-         FILE "$ENV{DESTDIR}/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle/accrualtracker"
+         FILE "$ENV{DESTDIR}/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/accrualtracker"
          RPATH "$ORIGIN/lib")
   endif()
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle/accrualtracker")
+   "/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/accrualtracker")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle" TYPE EXECUTABLE FILES "/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/intermediates_do_not_run/accrualtracker")
-  if(EXISTS "$ENV{DESTDIR}/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle/accrualtracker" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle/accrualtracker")
+file(INSTALL DESTINATION "/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle" TYPE EXECUTABLE FILES "/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/intermediates_do_not_run/accrualtracker")
+  if(EXISTS "$ENV{DESTDIR}/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/accrualtracker" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/accrualtracker")
     file(RPATH_CHANGE
-         FILE "$ENV{DESTDIR}/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle/accrualtracker"
-         OLD_RPATH "/home/martin/Documents/dev/github/accrualtracker/linux/flutter/ephemeral:"
+         FILE "$ENV{DESTDIR}/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/accrualtracker"
+         OLD_RPATH "/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/plugins/url_launcher_linux:/home/martin/Documents/dev/github/accrualtracker/flutter/linux/flutter/ephemeral:"
          NEW_RPATH "$ORIGIN/lib")
     if(CMAKE_INSTALL_DO_STRIP)
-      execute_process(COMMAND "/snap/flutter/current/usr/bin/strip" "$ENV{DESTDIR}/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle/accrualtracker")
+      execute_process(COMMAND "/snap/flutter/current/usr/bin/strip" "$ENV{DESTDIR}/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/accrualtracker")
     endif()
   endif()
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle/data/icudtl.dat")
+   "/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/data/icudtl.dat")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle/data" TYPE FILE FILES "/home/martin/Documents/dev/github/accrualtracker/linux/flutter/ephemeral/icudtl.dat")
+file(INSTALL DESTINATION "/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/data" TYPE FILE FILES "/home/martin/Documents/dev/github/accrualtracker/flutter/linux/flutter/ephemeral/icudtl.dat")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle/lib/libflutter_linux_gtk.so")
+   "/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/lib/libflutter_linux_gtk.so")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle/lib" TYPE FILE FILES "/home/martin/Documents/dev/github/accrualtracker/linux/flutter/ephemeral/libflutter_linux_gtk.so")
+file(INSTALL DESTINATION "/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/lib" TYPE FILE FILES "/home/martin/Documents/dev/github/accrualtracker/flutter/linux/flutter/ephemeral/libflutter_linux_gtk.so")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMPONENT)
+  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+   "/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/lib/liburl_launcher_linux_plugin.so")
+  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+file(INSTALL DESTINATION "/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/lib" TYPE FILE FILES "/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/plugins/url_launcher_linux/liburl_launcher_linux_plugin.so")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMPONENT)
   
-  file(REMOVE_RECURSE "/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle/data/flutter_assets")
+  file(REMOVE_RECURSE "/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/data/flutter_assets")
   
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle/data/flutter_assets")
+   "/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/data/flutter_assets")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/bundle/data" TYPE DIRECTORY FILES "/home/martin/Documents/dev/github/accrualtracker/build//flutter_assets")
+file(INSTALL DESTINATION "/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/bundle/data" TYPE DIRECTORY FILES "/home/martin/Documents/dev/github/accrualtracker/flutter/build//flutter_assets")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/flutter/cmake_install.cmake")
+  include("/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/flutter/cmake_install.cmake")
+  include("/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/plugins/url_launcher_linux/cmake_install.cmake")
 
 endif()
 
@@ -127,5 +140,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/martin/Documents/dev/github/accrualtracker/build/linux/x64/debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/martin/Documents/dev/github/accrualtracker/flutter/build/linux/x64/debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

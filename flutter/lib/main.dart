@@ -137,11 +137,11 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    _dataProvider.getAllTotals().then((value) {
-      setState(() {
-        _totals = value;
-      });
-    });
+    // _dataProvider.getAllTotals().then((value) {
+    //   setState(() {
+    //     _totals = value;
+    //   });
+    // });
 
     return Scaffold(
       appBar: AppBar(
